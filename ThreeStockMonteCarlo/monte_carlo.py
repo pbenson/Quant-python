@@ -23,9 +23,13 @@ class Position(object):
     def __init__(self, price_series, num_shares):
         self.price_series = price_series
         self.num_shares = num_shares
+        self.profits = []
 
     def __repr__(self):
         return str(self.num_shares) + ' shares of ' + self.price_series.ticker
+
+    def append_profit(self, profit):
+        self.profits.append(profit)
 
     def profit(self, scenario):
         log_return = np.inner(scenario.weight_on_returns,
@@ -33,6 +37,10 @@ class Position(object):
         new_price = self.price_series.current_price() * np.exp(log_return)
         price_change = new_price - self.price_series.current_price()
         return price_change * self.num_shares
+
+    def var(self, quantile):
+        sorted_profits = sorted(self.profits)
+        return -sorted_profits[int(quantile * len(sorted_profits))]
 
 
 class Portfolio(object):

@@ -8,7 +8,7 @@ with open('AMZN_GOOG_AAPL.csv', 'r') as csvfile:
     on_first_row = True
     # all_price_series = []
     for row in price_reader:
-        if on_first_row:
+        if on_first_row: # column headers
             tickers = row[1:]
             ticker_to_prices_dict = {ticker: [] for ticker in tickers}
             on_first_row = False
@@ -23,8 +23,8 @@ with open('AMZN_GOOG_AAPL.csv', 'r') as csvfile:
     #     ticker_to_series_dict[ticker] = mc.PriceSeries(ticker, prices)
     ticker_to_series_dict = {ticker:mc.PriceSeries(ticker, prices)
                              for ticker, prices in ticker_to_prices_dict.items()}
-
-    num_simulations = 10
+    # x = ticker_to_series_dict['GOOG']
+    num_simulations = 10000
     num_days_history_used = 252
     scenarios = [mc.Scenario(num_days_history_used)
                  for _ in range(num_simulations)]
@@ -33,8 +33,11 @@ with open('AMZN_GOOG_AAPL.csv', 'r') as csvfile:
     portfolio.add_position(ticker_to_series_dict['AAPL'], 2000)
     portfolio.add_position(ticker_to_series_dict['GOOG'], -1000)
 
-
     for scenario in scenarios:
         for position in portfolio.positions:
             profit = position.profit(scenario)
-            profit
+            position.append_profit(profit)
+
+    amzn = portfolio.positions[0]
+    quantile = 0.05
+    print(amzn.var(quantile))
