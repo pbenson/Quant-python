@@ -41,3 +41,4 @@ with open('AMZN_GOOG_AAPL.csv', 'r') as csvfile:
     amzn = portfolio.positions[0]
     quantile = 0.05
     print(amzn.var(quantile))
+    print(amzn.avar(quantile))
