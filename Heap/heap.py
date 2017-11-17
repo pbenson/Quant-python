@@ -1,6 +1,43 @@
+class RunningMedian:
+    def __init__(self):
+        self.minHeap = MinHeap()
+        self.maxHeap = MaxHeap()
+
+    def add(self, x):
+        if len(self.minHeap) == 0 and len(self.maxHeap) == 0:
+            self.minHeap.push(x)
+            return
+        if x < self.median():
+            self.maxHeap.push(x)
+            if len(self.maxHeap) - len(self.minHeap) > 1:
+                self.minHeap.push(self.maxHeap.pop())
+        else:
+            self.minHeap.push(x)
+            if len(self.minHeap) - len(self.maxHeap) > 1:
+                self.maxHeap.push(self.minHeap.pop())
+
+
+    def median(self):
+        if len(self.minHeap) > len(self.maxHeap):
+            return self.minHeap.peek()
+        if len(self.minHeap) < len(self.maxHeap):
+            return self.maxHeap.peek()
+        return (self.minHeap.peek() + self.maxHeap.peek()) * 0.5
+
+    def sorted(self):
+        # return a sorted list
+        return sorted(self.minHeap.data[1:] + self.maxHeap.data[1:])
+
+
 class BaseHeap:
     def __init__(self):
         self.data = [None]
+
+    def peek(self):
+        return self.data[1]
+
+    def __len__(self):
+        return len(self.data) - 1
 
     def pop(self):
         if len(self.data) == 2:
