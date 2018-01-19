@@ -51,5 +51,5 @@ class BagNodes:
 
 
 bag_nodes = BagNodes()
-x = bag_nodes.bag_node(250, 250).expected_winnings()
+x = bag_nodes.bag_node(1000, 1000).expected_winnings()
 print(x)
