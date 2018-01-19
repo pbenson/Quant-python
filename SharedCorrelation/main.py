@@ -1,9 +1,8 @@
 import random
 import matplotlib.pyplot as plt
-import plotly.plotly as py
 
-n = 3
-rho = 1
+n = 10
+rho = 0.5
 num_sims = 10000
 beta = rho**0.5
 alpha = (1 -rho)**0.5
@@ -23,8 +22,7 @@ for _ in range(num_sims):
 
 print(histogram)
 plt.hist(trial_results, bins=n+1, normed=0, align='mid')
-plt.title("Distribution of Positive Correlated Variates")
-plt.xlabel("Value")
-plt.ylabel("Frequency")
-# plt.axis([0, n+1, 0, 1])
+plt.title('Distribution of Defaults in ' + str(num_sims) + ' trials')
+plt.xlabel('Value')
+plt.ylabel('Frequency')
 plt.show()
