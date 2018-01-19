@@ -15,7 +15,7 @@ for _ in range(num_sims):
     K = 0 # number of variables that are > 0
     for _ in range(n):
         R_i = beta * M + alpha * random.gauss(0, 1)
-        if R_i > 0:
+        if R_i < 0:
             K += 1
     histogram[K] += 1
     trial_results.append(K)
