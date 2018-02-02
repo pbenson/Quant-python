@@ -10,11 +10,11 @@ EQUITY_INDEX_CUTOFFS = [0, 0.03, 0.07, 0.1, 0.15, 0.3, 1 ]
 n = 1000 #names in credit index
 rho = 0.1
 num_sims = 1000
-prob_default = 0.1
+prob_default = 0.25
 # For equity tranche 0-20%, mezzanine 20%-80%:
 # tranche_cutoffs = [0, 0.2, 1 ]
 tranche_cutoffs = EQUITY_INDEX_CUTOFFS
-tranche_to_watch = 5 #1 is equity, 2 mezz, etc
+tranche_to_watch = 4 #1 is equity, 2 mezz, etc
 
 # derived parameters
 z_score_of_default = norm.ppf(prob_default)
@@ -41,10 +41,10 @@ for _ in range(num_sims):
 
 fig, ax = plt.subplots()
 ax.xaxis.set_major_formatter(FormatStrFormatter('%d'))
-binz = np.arange(-0.5, names_in_tranche + 0.5)
+binz = np.arange(-0.5, names_in_tranche + 1.5)
 plt.hist(names_remaining_in_tranche, bins = binz)
 
-plt.title('Distribution of Names Left in ' + str(num_sims) + ' trials')
+plt.title('Names Left in Tranche ' + str(tranche_to_watch) + ' (' + str(num_sims) + ' trials)')
 plt.xlabel('Value')
 plt.ylabel('Frequency')
 plt.show()
